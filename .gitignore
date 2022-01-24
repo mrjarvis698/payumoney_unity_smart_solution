@@ -136,3 +136,6 @@ zaggle_cache/
 
 # some Dirs
 output/
+
+# some exe
+*.exe
