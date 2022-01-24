@@ -106,6 +106,10 @@ if license_verify == True:
         json_object = json.dumps(dictionary, indent = 1)
         with open("zaggle_cache/opened_sheet.json", "w") as outfile:
             outfile.write(json_object)
+    
+    # Opening JSON file & returns JSON object as a dictionary
+    json_file = open('settings.json')
+    settings_data = json.load(json_file)
 
     # read imported xlsx file path using pandas
     input_workbook = pd.read_excel(xlsx_file_path, sheet_name = 'Sheet1', dtype=str)
@@ -434,7 +438,7 @@ if license_verify == True:
 
     setUp()
     for i in range (card_iteration , total_input_rows):
-        for j in range (transaction_iteration, 4):
+        for j in range (transaction_iteration, int(settings_data['number_of_time_transactions_per_card'])):
             main()
             output_save()
         transaction_iteration = 0
