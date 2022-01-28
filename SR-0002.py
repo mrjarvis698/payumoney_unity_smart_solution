@@ -8,7 +8,7 @@ from openpyxl.workbook import Workbook
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException, NoSuchFrameException, NoSuchWindowException, UnexpectedAlertPresentException, WebDriverException, NoSuchWindowException
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException, NoSuchWindowException, UnexpectedAlertPresentException, WebDriverException, NoSuchWindowException
 from selenium.webdriver.common.alert import Alert
 import getpass
 
@@ -380,6 +380,7 @@ if license_verify == True:
 
             if skip == False:
                 try:
+                    time.sleep(1)
                     driver.find_element(By.XPATH, "//form[@id='ccdcCardsForm']/button/div/span")
                 except NoSuchElementException:
                     skip = True
@@ -429,7 +430,7 @@ if license_verify == True:
                         if transaction_status == "Payment Status: Successful":
                             transaction_id = driver.find_element(By.XPATH,"//div[4]/div[2]/div").text
                         else :
-                            transaction_status = "Failed"
+                            transaction_status = "Payment Status: Failed"
                             transaction_id = "-"
                 else:
                     skip = False
