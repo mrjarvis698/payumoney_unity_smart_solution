@@ -232,13 +232,13 @@ if license_verify == True:
         cc_number()
         cc_expiry()
         try:
-            driver.get("https://webfront.payu.in/webfront/#/payment/webfrontpage/unity-smart-solution/single/1122")
+            driver.get(settings_data['link'])
         except WebDriverException:
             print ("No internet - Sleeping For 1 Minute.")
             transaction_status = "No Internet"
             time.sleep(60)
         else:
-            driver.get("https://webfront.payu.in/webfront/#/payment/webfrontpage/unity-smart-solution/single/1122")
+            driver.get(settings_data['link'])
             if skip == False:
                 try:
                     driver.find_element(By.NAME, "name")                
@@ -386,7 +386,10 @@ if license_verify == True:
                     skip = True
                 else:
                     skip = False
-                    driver.find_element(By.XPATH, "//form[@id='ccdcCardsForm']/button/div/span").click()
+                    try:
+                        driver.find_element(By.XPATH, "//form[@id='ccdcCardsForm']/button/div/span").click()
+                    except StaleElementReferenceException:
+                        skip = True
             else :
                 transaction_status = 'Null'
                 transaction_id = "-"
